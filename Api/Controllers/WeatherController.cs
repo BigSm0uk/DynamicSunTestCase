@@ -1,37 +1,40 @@
 using Api.Services;
-using Core.Abstraction;
 using Core.Domain;
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+  
     public class WeatherController(WeatherRepository weatherRepository, ExcelReader excelReader) : ControllerBase
     {
         [HttpGet("first")]
         public Task<IEnumerable<WeatherEntity?>> GetFirstNWeathers(int takeValue)
         {
-            return weatherRepository.GetNFirstAsync(takeValue);
+            return weatherRepository.GetMultipleWeatherEntitiesAsync(takeValue);
         }
-        
+
         [HttpGet("withPagination")]
         public Task<IEnumerable<WeatherEntity?>> GetWithPagination(int pageNumber, int pageSize)
         {
-            return weatherRepository.GetNFromPageAsync(pageNumber, pageSize);
+            return weatherRepository.GetMultipleWeatherEntitiesByPageAsync(pageNumber, pageSize);
         }
+
         [HttpGet("byYear")]
         public Task<IEnumerable<WeatherEntity?>> GetByYear(int pageNumber, int pageSize, int year)
         {
-            return weatherRepository.GetWithYearNavigationAsync(pageNumber, pageSize, year);
+            return weatherRepository.GetMultipleWeatherEntitiesByYearAsync(pageNumber, pageSize, year);
         }
+
         [HttpGet("byMonth")]
         public Task<IEnumerable<WeatherEntity?>> GetByMonth(int pageNumber, int pageSize, int month)
         {
-            return weatherRepository.GetNWithMonthNavigationAsync(pageNumber, pageSize, month);
+            return weatherRepository.GetMultipleWeatherEntitiesByMonthAsync(pageNumber, pageSize, month);
         }
-        
+
         [HttpPost("create-weather")]
         public async Task<ActionResult> PostCreateWeather()
         {
@@ -50,7 +53,6 @@ namespace Api.Controllers
             return Ok();
         }
 
-        // POST api/<WeatherController>
         [HttpPost("load-weather")]
         public async Task<ActionResult> PostLoadWeather(IFormFileCollection files)
         {
@@ -59,24 +61,22 @@ namespace Api.Controllers
                 var formCollection = await Request.ReadFormAsync();// Костыльное решение
                 files = formCollection.Files;
             }
-            
+
             if (files.Any(f => f.Length == 0))
             {
                 return BadRequest();
             }
 
             var res = await excelReader.ReadAllFiles(files);
-            
-            return Content($"{res}. All {files.Count} the files are successfully uploaded.", "text/plain");
-        }
-        
 
-        // DELETE api/<WeatherController>/5
+            return Ok(new { message = $"{res}. All {files.Count} the files are successfully uploaded." });
+        }
+
         [HttpDelete]
-        public async Task<ActionResult> Delete()
+        public async Task<ActionResult<int>> Delete()
         {
-            await weatherRepository.DeleteAllAsync();
-            return Ok();
+            int deletedCount = await weatherRepository.DeleteAllAsync();
+            return Ok(deletedCount);
         }
     }
 }

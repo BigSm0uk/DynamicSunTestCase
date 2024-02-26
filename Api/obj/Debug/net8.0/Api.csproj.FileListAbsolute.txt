@@ -248,3 +248,4 @@ C:\Users\Denis\RiderProjects\MyThreadsExample\DynamincSunTestCase\Api\bin\Debug\
 C:\Users\Denis\RiderProjects\MyThreadsExample\DynamincSunTestCase\Api\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\Denis\RiderProjects\MyThreadsExample\DynamincSunTestCase\Api\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\Denis\RiderProjects\MyThreadsExample\DynamincSunTestCase\Api\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
+C:\Users\Denis\RiderProjects\MyThreadsExample\DynamincSunTestCase\Api\obj\Debug\net8.0\Api.sourcelink.json
