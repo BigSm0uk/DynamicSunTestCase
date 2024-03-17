@@ -1,3 +1,3 @@
-#Все решение для DynamicSun
+# ASP .NET Core приложение + Angular, которое позволяет загружать от 1 до нескольких файлов Excel с погодой и просматривать эти данные с пагинацией и навигацией по месяцам и годам.
 
-##Ссылка на отдельный фронтенд:https://github.com/BigSm0uk/weatherFrontend
+## Ссылка на отдельный фронтенд:https://github.com/BigSm0uk/weatherFrontend
